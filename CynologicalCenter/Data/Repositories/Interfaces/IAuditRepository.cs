@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CynologicalCenter.Models;
 
 namespace CynologicalCenter.Data.Repositories.Interfaces
 {
-    internal interface IAuditRepository
+    public interface IAuditRepository
     {
+        Task<List<AuditLog>> GetByDateRangeAsync(DateTime from, DateTime to);
+        Task<List<AuditLog>> GetByTableAsync(string tableName);
+        Task<List<AuditLog>> GetErrorsAsync();
     }
 }
