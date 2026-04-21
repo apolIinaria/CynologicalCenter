@@ -5,9 +5,86 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CynologicalCenter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="Кінологічний центр"
+        Height="700" Width="1100"
+        WindowStartupLocation="CenterScreen"
 		Loaded="Window_Loaded">
-	<Grid>
+    <Window.Resources>
+        <Style x:Key="NavButton" TargetType="Button">
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Margin" Value="0,2"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#E2E8F0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="16,0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#334155"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Column="0" Background="#1E293B">
+            <StackPanel DockPanel.Dock="Top" Margin="0,16,0,0">
+
+                <TextBlock Text="КЦ" FontSize="22" FontWeight="Bold"
+                           Foreground="White" Margin="16,0,0,24"/>
+
+                <TextBlock x:Name="TxtUserInfo" Foreground="#94A3B8"
+                           FontSize="12" Margin="16,0,0,16"/>
+
+                <Separator Background="#334155" Margin="0,0,0,8"/>
+
+                <Button Content="Дашборд"
+                        Style="{StaticResource NavButton}"
+                        Click="NavDashboard_Click"/>
+                <Button Content="Клієнти"
+                        Style="{StaticResource NavButton}"
+                        Click="NavOwners_Click"/>
+                <Button Content="Собаки"
+                        Style="{StaticResource NavButton}"
+                        Click="NavDogs_Click"/>
+                <Button Content="Тренери"
+                        Style="{StaticResource NavButton}"
+                        Click="NavTrainers_Click"/>
+                <Button Content="Курси"
+                        Style="{StaticResource NavButton}"
+                        Click="NavCourses_Click"/>
+                <Button Content="Заняття"
+                        Style="{StaticResource NavButton}"
+                        Click="NavSessions_Click"/>
+
+                <Separator Background="#334155" Margin="0,8"/>
+
+                <Button Content="Звіти"
+                        Style="{StaticResource NavButton}"
+                        Click="NavReports_Click"/>
+
+                <Button x:Name="BtnAdmin"
+                        Content="Адмін"
+                        Style="{StaticResource NavButton}"
+                        Click="NavAdmin_Click"
+                        Visibility="Collapsed"/>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Bottom" Margin="0,0,0,16">
+                <Separator Background="#334155" Margin="0,0,0,8"/>
+                <Button Content="Вийти"
+                        Style="{StaticResource NavButton}"
+                        Click="BtnLogout_Click"/>
+            </StackPanel>
+        </DockPanel>
         
+        <Frame Grid.Column="1" x:Name="MainFrame"
+               NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

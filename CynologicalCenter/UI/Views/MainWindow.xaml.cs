@@ -13,31 +13,46 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CynologicalCenter.Data;
+using CynologicalCenter.Helpers;
+using CynologicalCenter.UI.Pages;
 using MySql.Data.MySqlClient;
 
 namespace CynologicalCenter.UI.Views
 {
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow() => InitializeComponent();
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
+            TxtUserInfo.Text = $"{CurrentUser.Username}\n({CurrentUser.Role})";
+
+            if (CurrentUser.IsAdmin)
+                BtnAdmin.Visibility = Visibility.Visible;
+            MainFrame.Navigate(new DashboardPage());
         }
 
-        private  async void Window_Loaded(object sender, RoutedEventArgs e)
+        private void NavDashboard_Click(object sender, RoutedEventArgs e)
+            => MainFrame.Navigate(new DashboardPage());
+        private void NavOwners_Click(object sender, RoutedEventArgs e)
+            => MainFrame.Navigate(new OwnersPage());
+        private void NavDogs_Click(object sender, RoutedEventArgs e)
+            => MainFrame.Navigate(new DogsPage());
+        private void NavTrainers_Click(object sender, RoutedEventArgs e)
+            => MainFrame.Navigate(new TrainersPage());
+        private void NavCourses_Click(object sender, RoutedEventArgs e)
+            => MainFrame.Navigate(new CoursesPage());
+        private void NavSessions_Click(object sender, RoutedEventArgs e)
+            => MainFrame.Navigate(new SessionsPage());
+        private void NavReports_Click(object sender, RoutedEventArgs e)
+            => MainFrame.Navigate(new ReportsPage());
+        private void NavAdmin_Click(object sender, RoutedEventArgs e)
+            => MainFrame.Navigate(new AdminPage());
+        private void BtnLogout_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var factory = new DbConnectionFactory();
-                using var conn = factory.CreateConnection();
-                await conn.OpenAsync();
-
-                MessageBox.Show("Підключення до БД успішне!");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Помилка підключення:\n{ex.Message}");
-            }
+            CurrentUser.Logout();
+            var login = new LoginWindow();
+            login.Show();
+            Close();
         }
     }
 }

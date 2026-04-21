@@ -1,0 +1,47 @@
+﻿<Window x:Class="CynologicalCenter.UI.Dialogs.OwnerEditDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Клієнт" Height="300" Width="420"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" x:Name="TxtTitle"
+                   Text="Новий клієнт"
+                   FontSize="16" FontWeight="Bold"
+                   Margin="0,0,0,16"/>
+
+        <TextBlock Grid.Row="1" Text="ПІБ *" Margin="0,0,0,4"/>
+        <TextBox Grid.Row="2" x:Name="TxtFullName"
+                 Height="32" Padding="8,4" Margin="0,0,0,10"/>
+
+        <TextBlock Grid.Row="3" Text="Телефон" Margin="0,0,0,4"/>
+        <TextBox Grid.Row="4" x:Name="TxtPhone"
+                 Height="32" Padding="8,4" Margin="0,0,0,10"/>
+
+        <TextBlock Grid.Row="5" Text="Email" Margin="0,0,0,4"/>
+        <TextBox x:Name="TxtEmail" Height="32" Padding="8,4"/>
+
+        <StackPanel Grid.Row="6" Orientation="Horizontal"
+                    HorizontalAlignment="Right" Margin="0,16,0,0">
+            <TextBlock x:Name="TxtError" Foreground="Red"
+                       VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <Button Content="Скасувати" Height="32" Padding="16,0"
+                    Margin="0,0,8,0" Click="BtnCancel_Click"/>
+            <Button Content="Зберегти" Height="32" Padding="16,0"
+                    Background="#2563EB" Foreground="White"
+                    BorderThickness="0" Click="BtnSave_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

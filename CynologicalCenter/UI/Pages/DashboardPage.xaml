@@ -1,0 +1,103 @@
+﻿<Page x:Class="CynologicalCenter.UI.Pages.DashboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Дашборд"
+      Loaded="Page_Loaded">
+
+    <ScrollViewer>
+        <StackPanel Margin="24">
+
+            <TextBlock Text="Дашборд" FontSize="22"
+                       FontWeight="Bold" Margin="0,0,0,20"/>
+            
+            <UniformGrid Columns="3" Margin="0,0,0,24">
+
+                <Border Background="#EFF6FF" CornerRadius="8"
+                        Padding="20" Margin="0,0,12,0">
+                    <StackPanel>
+                        <TextBlock Text="Активні клієнти"
+                                   Foreground="#64748B" FontSize="13"/>
+                        <TextBlock x:Name="TxtActiveClients"
+                                   FontSize="32" FontWeight="Bold"
+                                   Foreground="#2563EB"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="#F0FDF4" CornerRadius="8"
+                        Padding="20" Margin="0,0,12,0">
+                    <StackPanel>
+                        <TextBlock Text="Занять сьогодні"
+                                   Foreground="#64748B" FontSize="13"/>
+                        <TextBlock x:Name="TxtTodaySessions"
+                                   FontSize="32" FontWeight="Bold"
+                                   Foreground="#16A34A"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="#FFF7ED" CornerRadius="8"
+                        Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="⚠ Прострочена вакцинація"
+                                   Foreground="#64748B" FontSize="13"/>
+                        <TextBlock x:Name="TxtExpiredVacc"
+                                   FontSize="32" FontWeight="Bold"
+                                   Foreground="#EA580C"/>
+                    </StackPanel>
+                </Border>
+
+            </UniformGrid>
+            <TextBlock Text="Собаки з простроченою вакцинацією"
+                       FontSize="16" FontWeight="SemiBold"
+                       Margin="0,0,0,8"/>
+
+            <DataGrid x:Name="GridExpired"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True" CanUserAddRows="False"
+                      MaxHeight="220"
+                      GridLinesVisibility="Horizontal"
+                      HeadersVisibility="Column">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Кличка"
+                        Binding="{Binding Nickname}" Width="120"/>
+                    <DataGridTextColumn Header="Порода"
+                        Binding="{Binding BreedName}" Width="140"/>
+                    <DataGridTextColumn Header="Власник"
+                        Binding="{Binding OwnerName}" Width="160"/>
+                    <DataGridTextColumn Header="Телефон"
+                        Binding="{Binding Phone}" Width="130"/>
+                    <DataGridTextColumn Header="Остання вакцинація"
+                        Binding="{Binding LastVaccination,
+                            StringFormat=dd.MM.yyyy}" Width="150"/>
+                    <DataGridTextColumn Header="Днів минуло"
+                        Binding="{Binding DaysSinceVaccination}"
+                        Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <TextBlock Text="Заплановані заняття"
+                       FontSize="16" FontWeight="SemiBold"
+                       Margin="0,20,0,8"/>
+
+            <DataGrid x:Name="GridSchedule"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True" CanUserAddRows="False"
+                      MaxHeight="220"
+                      GridLinesVisibility="Horizontal"
+                      HeadersVisibility="Column">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Час"
+                        Binding="{Binding SessionTime}" Width="130"/>
+                    <DataGridTextColumn Header="Собака"
+                        Binding="{Binding Dog}" Width="120"/>
+                    <DataGridTextColumn Header="Тренер"
+                        Binding="{Binding Trainer}" Width="150"/>
+                    <DataGridTextColumn Header="Курс"
+                        Binding="{Binding Course}" Width="160"/>
+                    <DataGridTextColumn Header="Тривалість, хв"
+                        Binding="{Binding DurationMinutes}" Width="110"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>
