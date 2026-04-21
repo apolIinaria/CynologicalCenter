@@ -109,6 +109,7 @@
     <Compile Include="Helpers\CurrentUser.cs" />
     <Compile Include="Helpers\DbReaderExtensions.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
+    <Compile Include="Helpers\PhotoHelper.cs" />
     <Compile Include="Services\EnrollmentService.cs" />
     <Compile Include="Services\Interfaces\IEnrollmentService.cs" />
     <Compile Include="Services\Interfaces\IOwnerService.cs" />
