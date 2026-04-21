@@ -32,7 +32,7 @@ namespace CynologicalCenter.Data.Repositories
             await conn.OpenAsync();
             using var cmd = new MySqlCommand(
                 "SELECT * FROM trainers ORDER BY full_name", conn);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync()) list.Add(Map(r));
             return list;
         }
@@ -44,7 +44,7 @@ namespace CynologicalCenter.Data.Repositories
             using var cmd = new MySqlCommand(
                 "SELECT * FROM trainers WHERE trainer_id = @id", conn);
             cmd.Parameters.AddWithValue("@id", id);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             if (!await r.ReadAsync()) return null;
             return Map(r);
         }
@@ -109,7 +109,7 @@ namespace CynologicalCenter.Data.Repositories
             using var cmd = new MySqlCommand(
                 "SELECT course_id FROM trainer_courses WHERE trainer_id = @id", conn);
             cmd.Parameters.AddWithValue("@id", trainerId);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync()) list.Add(r.GetInt32(0));
             return list;
         }
@@ -139,7 +139,7 @@ namespace CynologicalCenter.Data.Repositories
             using var conn = _factory.CreateConnection();
             await conn.OpenAsync();
             using var cmd = new MySqlCommand("SELECT * FROM v_trainer_kpi", conn);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync())
                 list.Add(new TrainerKpiViewModel
                 {

@@ -7,6 +7,7 @@ using CynologicalCenter.Data.Repositories.Interfaces;
 using CynologicalCenter.Models;
 using CynologicalCenter.Models.ViewModels;
 using MySql.Data.MySqlClient;
+using CynologicalCenter.Helpers;
 
 namespace CynologicalCenter.Data.Repositories
 {
@@ -42,7 +43,7 @@ namespace CynologicalCenter.Data.Repositories
                 LEFT JOIN trainers t ON s.trainer_id = t.trainer_id
                 LEFT JOIN courses c ON s.course_id = c.course_id
                 ORDER BY s.session_datetime DESC", conn);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync()) list.Add(Map(r));
             return list;
         }
@@ -59,7 +60,7 @@ namespace CynologicalCenter.Data.Repositories
                 LEFT JOIN courses c ON s.course_id = c.course_id
                 WHERE s.session_id = @id", conn);
             cmd.Parameters.AddWithValue("@id", id);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             if (!await r.ReadAsync()) return null;
             return Map(r);
         }
@@ -77,7 +78,7 @@ namespace CynologicalCenter.Data.Repositories
                 LEFT JOIN courses c ON s.course_id = c.course_id
                 WHERE s.dog_id = @id ORDER BY s.session_datetime DESC", conn);
             cmd.Parameters.AddWithValue("@id", dogId);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync()) list.Add(Map(r));
             return list;
         }
@@ -95,7 +96,7 @@ namespace CynologicalCenter.Data.Repositories
                 LEFT JOIN courses c ON s.course_id = c.course_id
                 WHERE s.trainer_id = @id ORDER BY s.session_datetime", conn);
             cmd.Parameters.AddWithValue("@id", trainerId);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync()) list.Add(Map(r));
             return list;
         }
@@ -113,7 +114,7 @@ namespace CynologicalCenter.Data.Repositories
                 LEFT JOIN courses c ON s.course_id = c.course_id
                 WHERE s.status = @st ORDER BY s.session_datetime", conn);
             cmd.Parameters.AddWithValue("@st", status);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync()) list.Add(Map(r));
             return list;
         }
@@ -135,7 +136,7 @@ namespace CynologicalCenter.Data.Repositories
             using var conn = _factory.CreateConnection();
             await conn.OpenAsync();
             using var cmd = new MySqlCommand("SELECT * FROM v_public_schedule", conn);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync())
                 list.Add(new PublicScheduleViewModel
                 {

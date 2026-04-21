@@ -28,7 +28,7 @@ namespace CynologicalCenter.Data.Repositories
             using var conn = _factory.CreateConnection();
             await conn.OpenAsync();
             using var cmd = new MySqlCommand("SELECT * FROM courses ORDER BY course_name", conn);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync()) list.Add(Map(r));
             return list;
         }
@@ -40,7 +40,7 @@ namespace CynologicalCenter.Data.Repositories
             using var cmd = new MySqlCommand(
                 "SELECT * FROM courses WHERE course_id = @id", conn);
             cmd.Parameters.AddWithValue("@id", id);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             if (!await r.ReadAsync()) return null;
             return Map(r);
         }

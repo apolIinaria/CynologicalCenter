@@ -7,6 +7,7 @@ using CynologicalCenter.Data.Repositories.Interfaces;
 using CynologicalCenter.Models;
 using CynologicalCenter.Models.ViewModels;
 using MySql.Data.MySqlClient;
+using CynologicalCenter.Helpers;
 
 namespace CynologicalCenter.Data.Repositories
 {
@@ -38,7 +39,7 @@ namespace CynologicalCenter.Data.Repositories
                 LEFT JOIN breeds b ON d.breed_id = b.breed_id
                 LEFT JOIN owners o ON d.owner_id = o.owner_id
                 ORDER BY d.nickname", conn);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync()) list.Add(Map(r));
             return list;
         }
@@ -55,7 +56,7 @@ namespace CynologicalCenter.Data.Repositories
                 LEFT JOIN owners o ON d.owner_id = o.owner_id
                 WHERE d.owner_id = @id", conn);
             cmd.Parameters.AddWithValue("@id", ownerId);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync()) list.Add(Map(r));
             return list;
         }
@@ -71,7 +72,7 @@ namespace CynologicalCenter.Data.Repositories
                 LEFT JOIN owners o ON d.owner_id = o.owner_id
                 WHERE d.dog_id = @id", conn);
             cmd.Parameters.AddWithValue("@id", id);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             if (!await r.ReadAsync()) return null;
             return Map(r);
         }
@@ -124,7 +125,7 @@ namespace CynologicalCenter.Data.Repositories
             using var conn = _factory.CreateConnection();
             await conn.OpenAsync();
             using var cmd = new MySqlCommand("SELECT * FROM v_dog_training_profile", conn);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync())
                 list.Add(MapProfile(r));
             return list;
@@ -137,7 +138,7 @@ namespace CynologicalCenter.Data.Repositories
             using var cmd = new MySqlCommand(
                 "SELECT * FROM v_dog_training_profile WHERE dog_id = @id", conn);
             cmd.Parameters.AddWithValue("@id", dogId);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             if (!await r.ReadAsync()) return null;
             return MapProfile(r);
         }
@@ -148,7 +149,7 @@ namespace CynologicalCenter.Data.Repositories
             using var conn = _factory.CreateConnection();
             await conn.OpenAsync();
             using var cmd = new MySqlCommand("SELECT * FROM v_expired_vaccination", conn);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync())
                 list.Add(new ExpiredVaccinationViewModel
                 {

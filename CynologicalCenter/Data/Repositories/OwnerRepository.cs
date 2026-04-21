@@ -30,7 +30,7 @@ namespace CynologicalCenter.Data.Repositories
             await conn.OpenAsync();
             using var cmd = new MySqlCommand(
                 "SELECT owner_id, full_name, phone, email, is_active FROM owners", conn);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync()) list.Add(Map(r));
             return list;
         }
@@ -42,7 +42,7 @@ namespace CynologicalCenter.Data.Repositories
             await conn.OpenAsync();
             using var cmd = new MySqlCommand(
                 "SELECT owner_id, full_name, phone, email, is_active FROM owners WHERE is_active = 1", conn);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync()) list.Add(Map(r));
             return list;
         }
@@ -54,7 +54,7 @@ namespace CynologicalCenter.Data.Repositories
             using var cmd = new MySqlCommand(
                 "SELECT owner_id, full_name, phone, email, is_active FROM owners WHERE owner_id = @id", conn);
             cmd.Parameters.AddWithValue("@id", id);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             if (!await r.ReadAsync()) return null;
             return Map(r);
         }
@@ -90,7 +90,7 @@ namespace CynologicalCenter.Data.Repositories
             using var conn = _factory.CreateConnection();
             await conn.OpenAsync();
             using var cmd = new MySqlCommand("SELECT * FROM v_active_clients", conn);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync())
                 list.Add(new ActiveClientViewModel
                 {

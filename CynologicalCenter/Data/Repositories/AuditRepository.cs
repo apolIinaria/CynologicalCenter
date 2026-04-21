@@ -38,7 +38,7 @@ namespace CynologicalCenter.Data.Repositories
                 ORDER BY changed_at DESC", conn);
             cmd.Parameters.AddWithValue("@f", from.Date);
             cmd.Parameters.AddWithValue("@t", to.Date);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync()) list.Add(Map(r));
             return list;
         }
@@ -51,7 +51,7 @@ namespace CynologicalCenter.Data.Repositories
             using var cmd = new MySqlCommand(@"
                 SELECT * FROM auditlog WHERE table_name = @t ORDER BY changed_at DESC", conn);
             cmd.Parameters.AddWithValue("@t", tableName);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync()) list.Add(Map(r));
             return list;
         }
@@ -63,7 +63,7 @@ namespace CynologicalCenter.Data.Repositories
             await conn.OpenAsync();
             using var cmd = new MySqlCommand(@"
                 SELECT * FROM auditlog WHERE action = 'ERROR' ORDER BY changed_at DESC", conn);
-            using var r = await cmd.ExecuteReaderAsync();
+            using var r = (MySqlDataReader)await cmd.ExecuteReaderAsync();
             while (await r.ReadAsync()) list.Add(Map(r));
             return list;
         }
