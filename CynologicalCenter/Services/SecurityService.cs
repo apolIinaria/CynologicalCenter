@@ -7,7 +7,6 @@ using CynologicalCenter.Data;
 using CynologicalCenter.Services.Interfaces;
 using MySql.Data.MySqlClient;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace CynologicalCenter.Services
 {
@@ -39,8 +38,8 @@ namespace CynologicalCenter.Services
                 if (!await reader.ReadAsync())
                     return (false, string.Empty);
 
-                string storedHash = reader.GetString("password_hash");
-                string salt = reader.GetString("salt");
+                string storedHash = reader.GetString(reader.GetOrdinal("password_hash"));
+                string salt = reader.GetString(reader.GetOrdinal("salt"));
                 reader.Close();
 
                 string inputHash = ComputeHash(password, salt);
