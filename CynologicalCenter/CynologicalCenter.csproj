@@ -142,7 +142,51 @@
     <Compile Include="Data\Repositories\SessionRepository.cs" />
     <Compile Include="Data\Repositories\TrainerRepository.cs" />
     <Compile Include="Data\StoredProcedures\ProcedureCaller.cs" />
+    <Page Include="UI\Dialogs\AuditReportDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\CompleteSessionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\CourseEditDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\DogEditDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\DogProfileDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\DogReportDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\EnrollDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Dialogs\OwnerEditDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\ScheduleReportDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\SecurityReportDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\TrainerEditDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\TrainerKpiDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -182,8 +226,41 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="UI\Dialogs\AuditReportDialog.xaml.cs">
+      <DependentUpon>AuditReportDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\CompleteSessionDialog.xaml.cs">
+      <DependentUpon>CompleteSessionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\CourseEditDialog.xaml.cs">
+      <DependentUpon>CourseEditDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\DogEditDialog.xaml.cs">
+      <DependentUpon>DogEditDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\DogProfileDialog.xaml.cs">
+      <DependentUpon>DogProfileDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\DogReportDialog.xaml.cs">
+      <DependentUpon>DogReportDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\EnrollDialog.xaml.cs">
+      <DependentUpon>EnrollDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Dialogs\OwnerEditDialog.xaml.cs">
       <DependentUpon>OwnerEditDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\ScheduleReportDialog.xaml.cs">
+      <DependentUpon>ScheduleReportDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\SecurityReportDialog.xaml.cs">
+      <DependentUpon>SecurityReportDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\TrainerEditDialog.xaml.cs">
+      <DependentUpon>TrainerEditDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\TrainerKpiDialog.xaml.cs">
+      <DependentUpon>TrainerKpiDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Pages\AdminPage.xaml.cs">
       <DependentUpon>AdminPage.xaml</DependentUpon>
@@ -209,6 +286,7 @@
     <Compile Include="UI\Pages\TrainersPage.xaml.cs">
       <DependentUpon>TrainersPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\ViewModels\BaseViewModel.cs" />
     <Compile Include="UI\Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -263,13 +341,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\" />
-    <Folder Include="UI\ViewModels\" />
-    <Folder Include="UI\Views\Admin\" />
-    <Folder Include="UI\Views\Dogs\" />
-    <Folder Include="UI\Views\Owners\" />
-    <Folder Include="UI\Views\Reports\" />
-    <Folder Include="UI\Views\Sessions\" />
-    <Folder Include="UI\Views\Trainers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

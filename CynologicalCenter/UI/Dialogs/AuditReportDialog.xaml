@@ -1,0 +1,59 @@
+﻿<Window x:Class="CynologicalCenter.UI.Dialogs.AuditReportDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Аналіз журналу аудиту" Height="650" Width="900"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Аналіз журналу аудиту"
+                   FontSize="18" FontWeight="Bold"
+                   Margin="0,0,0,16"/>
+
+        <Border Grid.Row="1" Background="#F0FDF4"
+                CornerRadius="8" Padding="16"
+                Margin="0,0,0,12">
+            <StackPanel>
+                <TextBlock Text="Загальна статистика"
+                           FontWeight="SemiBold" Margin="0,0,0,8"/>
+                <DataGrid x:Name="GridStats"
+                          AutoGenerateColumns="True"
+                          IsReadOnly="True" CanUserAddRows="False"
+                          MaxHeight="80"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"/>
+            </StackPanel>
+        </Border>
+        
+        <Border Grid.Row="2" Background="#EFF6FF"
+                CornerRadius="8" Padding="16"
+                Margin="0,0,0,12">
+            <StackPanel>
+                <TextBlock Text="Активність по таблицях"
+                           FontWeight="SemiBold" Margin="0,0,0,8"/>
+                <DataGrid x:Name="GridByTable"
+                          AutoGenerateColumns="True"
+                          IsReadOnly="True" CanUserAddRows="False"
+                          MaxHeight="120"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"/>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Grid.Row="3">
+            <TextBlock Text="Детальний журнал"
+                       FontWeight="SemiBold" Margin="0,0,0,8"/>
+            <DataGrid x:Name="GridDetail"
+                      AutoGenerateColumns="True"
+                      IsReadOnly="True" CanUserAddRows="False"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"/>
+        </StackPanel>
+    </Grid>
+</Window>

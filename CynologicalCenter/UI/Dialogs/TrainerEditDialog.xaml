@@ -1,0 +1,64 @@
+﻿<Window x:Class="CynologicalCenter.UI.Dialogs.TrainerEditDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Тренер" Height="460" Width="450"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" x:Name="TxtTitle"
+                   Text="Новий тренер"
+                   FontSize="16" FontWeight="Bold"
+                   Margin="0,0,0,16"/>
+
+        <TextBlock Grid.Row="1" Text="ПІБ *" Margin="0,0,0,4"/>
+        <TextBox Grid.Row="2" x:Name="TxtFullName"
+                 Height="32" Padding="8,4" Margin="0,0,0,10"/>
+
+        <TextBlock Grid.Row="3" Text="Телефон" Margin="0,0,0,4"/>
+        <TextBox Grid.Row="4" x:Name="TxtPhone"
+                 Height="32" Padding="8,4" Margin="0,0,0,10"/>
+
+        <TextBlock Grid.Row="5" Text="Email" Margin="0,0,0,4"/>
+        <TextBox Grid.Row="6" x:Name="TxtEmail"
+                 Height="32" Padding="8,4" Margin="0,0,0,10"/>
+
+        <Grid Grid.Row="7" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Досвід (років)" Margin="0,0,0,4"/>
+                <TextBox x:Name="TxtExperience"
+                         Height="32" Padding="8,4"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Дата найму" Margin="0,0,0,4"/>
+                <DatePicker x:Name="DpHireDate" Height="32"/>
+            </StackPanel>
+        </Grid>
+
+        <TextBlock Grid.Row="8" Text="Курси (допуски)"
+                   Margin="0,0,0,4"/>
+        <ListBox Grid.Row="9" x:Name="LstCourses"
+                 Height="100" Margin="0,0,0,10"
+                 SelectionMode="Multiple"
+                 DisplayMemberPath="CourseName"/>
+    </Grid>
+</Window>

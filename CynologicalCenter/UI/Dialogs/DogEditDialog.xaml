@@ -1,0 +1,70 @@
+﻿<Window x:Class="CynologicalCenter.UI.Dialogs.DogEditDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Собака" Height="420" Width="450"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" x:Name="TxtTitle"
+                   Text="Нова собака"
+                   FontSize="16" FontWeight="Bold"
+                   Margin="0,0,0,16"/>
+
+        <TextBlock Grid.Row="1" Text="Кличка *" Margin="0,0,0,4"/>
+        <TextBox Grid.Row="2" x:Name="TxtNickname"
+                 Height="32" Padding="8,4" Margin="0,0,0,10"/>
+
+        <TextBlock Grid.Row="3" Text="Порода" Margin="0,0,0,4"/>
+        <ComboBox Grid.Row="4" x:Name="CmbBreed"
+                  Height="32" Margin="0,0,0,10"
+                  DisplayMemberPath="BreedName"
+                  SelectedValuePath="BreedId"/>
+
+        <TextBlock Grid.Row="5" Text="Власник" Margin="0,0,0,4"/>
+        <ComboBox Grid.Row="6" x:Name="CmbOwner"
+                  Height="32" Margin="0,0,0,10"
+                  DisplayMemberPath="FullName"
+                  SelectedValuePath="OwnerId"/>
+
+        <Grid Grid.Row="7" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Дата народження" Margin="0,0,0,4"/>
+                <DatePicker x:Name="DpBirthDate" Height="32"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Остання вакцинація" Margin="0,0,0,4"/>
+                <DatePicker x:Name="DpVaccination" Height="32"/>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="8" Orientation="Horizontal"
+                    HorizontalAlignment="Right" Margin="0,8,0,0">
+            <TextBlock x:Name="TxtError" Foreground="Red"
+                       VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <Button Content="Скасувати" Height="32" Padding="16,0"
+                    Margin="0,0,8,0" Click="BtnCancel_Click"/>
+            <Button Content="Зберегти" Height="32" Padding="16,0"
+                    Background="#2563EB" Foreground="White"
+                    BorderThickness="0" Click="BtnSave_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

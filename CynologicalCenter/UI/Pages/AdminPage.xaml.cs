@@ -15,14 +15,28 @@ using System.Windows.Shapes;
 
 namespace CynologicalCenter.UI.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для AdminPage.xaml
-    /// </summary>
     public partial class AdminPage : Page
     {
-        public AdminPage()
+        public AdminPage() => InitializeComponent();
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+            => await LoadDataAsync();
+
+        private async System.Threading.Tasks.Task LoadDataAsync()
         {
-            InitializeComponent();
+            try
+            {
+                var logs = await App.Audit.GetByDateRangeAsync(
+                    DateTime.Today.AddDays(-30), DateTime.Today);
+                GridAudit.ItemsSource = logs;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка завантаження: {ex.Message}");
+            }
         }
+
+        private async void BtnRefresh_Click(object sender, RoutedEventArgs e)
+            => await LoadDataAsync();
     }
 }

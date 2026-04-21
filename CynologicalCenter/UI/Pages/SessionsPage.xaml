@@ -1,14 +1,74 @@
 ﻿<Page x:Class="CynologicalCenter.UI.Pages.SessionsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:CynologicalCenter.UI.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="SessionsPage">
+      Title="Заняття"
+      Loaded="Page_Loaded">
 
-    <Grid>
-        
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Заняття"
+                   FontSize="22" FontWeight="Bold"
+                   Margin="0,0,0,16"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal"
+                    Margin="0,0,0,12">
+            <Button Content="+ Записати на заняття"
+                    Height="32" Padding="16,0"
+                    Background="#2563EB" Foreground="White"
+                    BorderThickness="0"
+                    Click="BtnEnroll_Click"/>
+            <ComboBox x:Name="CmbStatus"
+                      Width="160" Height="32"
+                      Margin="12,0,0,0"
+                      SelectionChanged="CmbStatus_SelectionChanged"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" x:Name="GridSessions"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True" CanUserAddRows="False"
+                  GridLinesVisibility="Horizontal"
+                  HeadersVisibility="Column"
+                  SelectionMode="Single"
+                  SelectionChanged="GridSessions_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID"
+                    Binding="{Binding SessionId}" Width="50"/>
+                <DataGridTextColumn Header="Дата і час"
+                    Binding="{Binding SessionDatetime,
+                        StringFormat=dd.MM.yyyy HH:mm}" Width="140"/>
+                <DataGridTextColumn Header="Собака"
+                    Binding="{Binding DogNickname}" Width="120"/>
+                <DataGridTextColumn Header="Тренер"
+                    Binding="{Binding TrainerName}" Width="160"/>
+                <DataGridTextColumn Header="Курс"
+                    Binding="{Binding CourseName}" Width="160"/>
+                <DataGridTextColumn Header="Статус"
+                    Binding="{Binding Status}" Width="110"/>
+                <DataGridTextColumn Header="Оцінка"
+                    Binding="{Binding Grade}" Width="70"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal"
+                    Margin="0,12,0,0">
+            <Button x:Name="BtnComplete"
+                    Content="Завершити"
+                    Height="32" Padding="16,0" Margin="0,0,8,0"
+                    Background="#16A34A" Foreground="White"
+                    BorderThickness="0" IsEnabled="False"
+                    Click="BtnComplete_Click"/>
+            <Button x:Name="BtnCancel"
+                    Content="Скасувати"
+                    Height="32" Padding="16,0"
+                    Background="#DC2626" Foreground="White"
+                    BorderThickness="0" IsEnabled="False"
+                    Click="BtnCancel_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

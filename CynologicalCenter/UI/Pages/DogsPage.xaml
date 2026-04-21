@@ -1,14 +1,79 @@
 ﻿<Page x:Class="CynologicalCenter.UI.Pages.DogsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:CynologicalCenter.UI.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="DogsPage">
+      Title="Собаки"
+      Loaded="Page_Loaded">
 
-    <Grid>
-        
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Собаки"
+                   FontSize="22" FontWeight="Bold"
+                   Margin="0,0,0,16"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal"
+                    Margin="0,0,0,12">
+            <TextBox x:Name="TxtSearch"
+                     Width="250" Height="32" Padding="8,4"
+                     TextChanged="TxtSearch_TextChanged"/>
+            <TextBlock Text="🔍" VerticalAlignment="Center"
+                       Margin="8,0,16,0" FontSize="16"/>
+            <Button Content="+ Додати собаку"
+                    Height="32" Padding="16,0"
+                    Background="#2563EB" Foreground="White"
+                    BorderThickness="0"
+                    Click="BtnAdd_Click"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" x:Name="GridDogs"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True" CanUserAddRows="False"
+                  GridLinesVisibility="Horizontal"
+                  HeadersVisibility="Column"
+                  SelectionMode="Single"
+                  SelectionChanged="GridDogs_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID"
+                    Binding="{Binding DogId}" Width="50"/>
+                <DataGridTextColumn Header="Кличка"
+                    Binding="{Binding Nickname}" Width="120"/>
+                <DataGridTextColumn Header="Порода"
+                    Binding="{Binding Breed}" Width="150"/>
+                <DataGridTextColumn Header="Вік (міс)"
+                    Binding="{Binding AgeMonths}" Width="80"/>
+                <DataGridTextColumn Header="Власник"
+                    Binding="{Binding Owner}" Width="180"/>
+                <DataGridTextColumn Header="Телефон"
+                    Binding="{Binding Phone}" Width="130"/>
+                <DataGridTextColumn Header="Занять"
+                    Binding="{Binding TotalSessions}" Width="70"/>
+                <DataGridTextColumn Header="Середня оцінка"
+                    Binding="{Binding AvgGrade}" Width="120"/>
+                <DataGridTextColumn Header="Вакцинація"
+                    Binding="{Binding LastVaccination,
+                        StringFormat=dd.MM.yyyy}" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal"
+                    Margin="0,12,0,0">
+            <Button x:Name="BtnEdit"
+                    Content="✏ Редагувати"
+                    Height="32" Padding="16,0" Margin="0,0,8,0"
+                    Background="#0F172A" Foreground="White"
+                    BorderThickness="0" IsEnabled="False"
+                    Click="BtnEdit_Click"/>
+            <Button x:Name="BtnProfile"
+                    Content="📋 Профіль"
+                    Height="32" Padding="16,0"
+                    Background="#0369A1" Foreground="White"
+                    BorderThickness="0" IsEnabled="False"
+                    Click="BtnProfile_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

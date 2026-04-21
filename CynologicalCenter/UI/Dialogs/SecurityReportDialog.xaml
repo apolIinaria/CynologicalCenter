@@ -1,0 +1,64 @@
+﻿<Window x:Class="CynologicalCenter.UI.Dialogs.SecurityReportDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Інциденти безпеки" Height="650" Width="900"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" x:Name="TxtTotal"
+                   FontSize="18" FontWeight="Bold"
+                   Margin="0,0,0,16"/>
+
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Масові DELETE"
+                       FontWeight="SemiBold" Margin="0,0,0,4"/>
+            <DataGrid x:Name="GridDelete"
+                      AutoGenerateColumns="True"
+                      IsReadOnly="True" CanUserAddRows="False"
+                      MaxHeight="100" Margin="0,0,0,12"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="Помилки авторизації"
+                       FontWeight="SemiBold" Margin="0,0,0,4"/>
+            <DataGrid x:Name="GridErrors"
+                      AutoGenerateColumns="True"
+                      IsReadOnly="True" CanUserAddRows="False"
+                      MaxHeight="100" Margin="0,0,0,12"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3">
+            <TextBlock Text="Нічна активність"
+                       FontWeight="SemiBold" Margin="0,0,0,4"/>
+            <DataGrid x:Name="GridNight"
+                      AutoGenerateColumns="True"
+                      IsReadOnly="True" CanUserAddRows="False"
+                      MaxHeight="100" Margin="0,0,0,12"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4">
+            <TextBlock Text="Зведений підсумок"
+                       FontWeight="SemiBold" Margin="0,0,0,4"/>
+            <DataGrid x:Name="GridSummary"
+                      AutoGenerateColumns="True"
+                      IsReadOnly="True" CanUserAddRows="False"
+                      MaxHeight="80"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"/>
+        </StackPanel>
+    </Grid>
+</Window>

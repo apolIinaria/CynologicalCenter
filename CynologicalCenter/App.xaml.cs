@@ -36,6 +36,15 @@ namespace CynologicalCenter
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            DispatcherUnhandledException += (s, ex) =>
+            {
+                MessageBox.Show(
+                    $"Непередбачена помилка:\n{ex.Exception.Message}",
+                    "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                ex.Handled = true;
+            };
+
             string photosRoot = ConfigurationManager.AppSettings["PhotosRootPath"]!;
             Directory.CreateDirectory(Path.Combine(photosRoot, "dogs"));
             Directory.CreateDirectory(Path.Combine(photosRoot, "trainers"));

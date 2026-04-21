@@ -1,0 +1,59 @@
+﻿<Window x:Class="CynologicalCenter.UI.Dialogs.DogReportDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Звіт по собаці" Height="600" Width="800"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Звіт по собаці"
+                   FontSize="18" FontWeight="Bold"
+                   Margin="0,0,0,12"/>
+
+        <Border Grid.Row="1" Background="#F8FAFC"
+                CornerRadius="8" Padding="12"
+                Margin="0,0,0,12">
+            <StackPanel>
+                <TextBlock Text="Основна інформація"
+                           FontWeight="SemiBold" Margin="0,0,0,6"/>
+                <DataGrid x:Name="GridInfo"
+                          AutoGenerateColumns="True"
+                          IsReadOnly="True" CanUserAddRows="False"
+                          MaxHeight="80"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2" Background="#EFF6FF"
+                CornerRadius="8" Padding="12"
+                Margin="0,0,0,12">
+            <StackPanel>
+                <TextBlock Text="Статистика навчання"
+                           FontWeight="SemiBold" Margin="0,0,0,6"/>
+                <DataGrid x:Name="GridStats"
+                          AutoGenerateColumns="True"
+                          IsReadOnly="True" CanUserAddRows="False"
+                          MaxHeight="80"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"/>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Grid.Row="3">
+            <TextBlock Text="Історія занять"
+                       FontWeight="SemiBold" Margin="0,0,0,6"/>
+            <DataGrid x:Name="GridHistory"
+                      AutoGenerateColumns="True"
+                      IsReadOnly="True" CanUserAddRows="False"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"/>
+        </StackPanel>
+    </Grid>
+</Window>

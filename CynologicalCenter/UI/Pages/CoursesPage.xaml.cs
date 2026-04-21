@@ -12,17 +12,79 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CynologicalCenter.Models;
 
 namespace CynologicalCenter.UI.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для CoursesPage.xaml
-    /// </summary>
     public partial class CoursesPage : Page
     {
-        public CoursesPage()
+        private List<Course> _allCourses = new();
+        private Course? _selected;
+        public CoursesPage() => InitializeComponent();
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+            => await LoadDataAsync();
+
+        private async System.Threading.Tasks.Task LoadDataAsync()
         {
-            InitializeComponent();
+            try
+            {
+                _allCourses = await App.Courses.GetAllAsync();
+                GridCourses.ItemsSource = _allCourses;
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Помилка завантаження: {ex.Message}");
+            }
+        }
+
+        private void GridCourses_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _selected = GridCourses.SelectedItem as Course;
+            bool has = _selected != null;
+            BtnEdit.IsEnabled = has;
+            BtnDelete.IsEnabled = has;
+        }
+
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new CynologicalCenter.UI.Dialogs.CourseEditDialog();
+            if (dialog.ShowDialog() == true)
+                _ = LoadDataAsync();
+        }
+
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selected == null) return;
+            var dialog = new CynologicalCenter.UI.Dialogs.CourseEditDialog(_selected.CourseId);
+            if (dialog.ShowDialog() == true)
+                _ = LoadDataAsync();
+        }
+
+        private async void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selected == null) return;
+
+            var result = MessageBox.Show(
+                $"Видалити курс {_selected.CourseName}?",
+                "Підтвердження",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes) return;
+
+            try
+            {
+                await App.Courses.DeleteAsync(_selected.CourseId);
+                MessageBox.Show("Курс видалено", "Успішно",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                await LoadDataAsync();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Помилка: {ex.Message}", "Помилка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

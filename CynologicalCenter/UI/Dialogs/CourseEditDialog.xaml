@@ -1,0 +1,67 @@
+﻿<Window x:Class="CynologicalCenter.UI.Dialogs.CourseEditDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Курс" Height="380" Width="450"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" x:Name="TxtTitle"
+                   Text="Новий курс"
+                   FontSize="16" FontWeight="Bold"
+                   Margin="0,0,0,16"/>
+
+        <TextBlock Grid.Row="1" Text="Назва *" Margin="0,0,0,4"/>
+        <TextBox Grid.Row="2" x:Name="TxtName"
+                 Height="32" Padding="8,4" Margin="0,0,0,10"/>
+
+        <TextBlock Grid.Row="3" Text="Опис" Margin="0,0,0,4"/>
+        <TextBox Grid.Row="4" x:Name="TxtDescription"
+                 Height="60" Padding="8,4"
+                 TextWrapping="Wrap"
+                 AcceptsReturn="True"
+                 Margin="0,0,0,10"/>
+
+        <Grid Grid.Row="5" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Ціна (грн)" Margin="0,0,0,4"/>
+                <TextBox x:Name="TxtPrice"
+                         Height="32" Padding="8,4"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Мін. вік (міс)" Margin="0,0,0,4"/>
+                <TextBox x:Name="TxtMinAge"
+                         Height="32" Padding="8,4"/>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="8" Orientation="Horizontal"
+                    HorizontalAlignment="Right" Margin="0,8,0,0">
+            <TextBlock x:Name="TxtError" Foreground="Red"
+                       VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <Button Content="Скасувати" Height="32" Padding="16,0"
+                    Margin="0,0,8,0" Click="BtnCancel_Click"/>
+            <Button Content="Зберегти" Height="32" Padding="16,0"
+                    Background="#2563EB" Foreground="White"
+                    BorderThickness="0" Click="BtnSave_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
