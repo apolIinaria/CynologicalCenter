@@ -115,7 +115,7 @@
     <Compile Include="Services\Interfaces\IReportService.cs" />
     <Compile Include="Services\Interfaces\ISecurityService.cs" />
     <Compile Include="Services\Interfaces\ISessionService.cs" />
-    <Compile Include="Services\Interfaces\ITrainerSession.cs" />
+    <Compile Include="Services\Interfaces\ITrainerService.cs" />
     <Compile Include="Services\OwnerService.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\SecurityService.cs" />

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace CynologicalCenter.Services.Interfaces
 {
-    internal interface IEnrollmentService
+    public interface IEnrollmentService
     {
+        Task<(bool Success, string Message)> EnrollAsync(
+            int dogId, int trainerId, int courseId, DateTime sessionTime);
     }
 }

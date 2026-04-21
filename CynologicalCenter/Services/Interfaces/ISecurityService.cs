@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CynologicalCenter.Services.Interfaces
 {
-    internal interface ISecurityService
+    public interface ISecurityService
     {
+        Task<(bool Success, string Role)> LoginAsync(string username, string password);
     }
 }
