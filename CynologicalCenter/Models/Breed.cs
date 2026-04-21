@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace CynologicalCenter.Models
 {
-    internal class Breed
+    public class Breed
     {
+        public int BreedId { get; set; }
+        public string BreedName { get; set; } = string.Empty;
+
     }
 }

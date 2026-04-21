@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace CynologicalCenter.Models
 {
-    internal class Course
+    public class Course
     {
+        public int CourseId { get; set; }
+        public string CourseName { get; set; } = string.Empty;
+        public string? Description { get; set; }
+        public decimal? Price { get; set; }
+        public int? MinAgeMonths { get; set; }
     }
 }
