@@ -31,6 +31,8 @@ namespace CynologicalCenter.UI.Dialogs
         {
             BtnUploadPhoto.Visibility = RoleAccess.CanManageClients
                 ? Visibility.Visible : Visibility.Collapsed;
+            BtnDelete.Visibility = RoleAccess.IsAdmin
+                ? Visibility.Visible : Visibility.Collapsed;
             BtnEdit.Visibility = RoleAccess.CanManageClients
                 ? Visibility.Visible : Visibility.Collapsed;
 
@@ -156,6 +158,37 @@ namespace CynologicalCenter.UI.Dialogs
                 MessageBox.Show($"Помилка: {ex.Message}",
                     "Помилка", MessageBoxButton.OK,
                     MessageBoxImage.Error);
+            }
+        }
+
+        private async void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show(
+                $"Видалити собаку {TxtDogName.Text}?\n\nВся історія занять буде збережена.",
+                "Підтвердження видалення",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes) return;
+
+            try
+            {
+                var dog = await App.Dogs.GetByIdAsync(_dogId);
+                if (dog?.PhotoPath != null)
+                    PhotoHelper.DeletePhoto(dog.PhotoPath);
+
+                await App.Dogs.DeleteAsync(_dogId);
+
+                MessageBox.Show("Собаку видалено", "Успішно",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+
+                DialogResult = true;
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка видалення: {ex.Message}",
+                    "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

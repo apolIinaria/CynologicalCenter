@@ -19,5 +19,6 @@ namespace CynologicalCenter.Data.Repositories.Interfaces
         Task<List<DogProfileViewModel>> GetProfilesViewAsync();
         Task<DogProfileViewModel?> GetProfileViewAsync(int dogId);
         Task<List<ExpiredVaccinationViewModel>> GetExpiredVaccinationViewAsync();
+        Task DeleteAsync(int dogId);
     }
 }

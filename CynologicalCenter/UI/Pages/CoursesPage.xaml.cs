@@ -59,7 +59,7 @@ namespace CynologicalCenter.UI.Pages
                 Width = 240,
                 Margin = new Thickness(0, 0, 12, 12),
                 Background = Brushes.White,
-                CornerRadius = new CornerRadius(5),
+                CornerRadius = new CornerRadius(12),
                 Padding = new Thickness(20),
                 Cursor = RoleAccess.IsAdmin
                                ? Cursors.Hand : Cursors.Arrow,
@@ -91,7 +91,8 @@ namespace CynologicalCenter.UI.Pages
 
             var detailsPanel = new StackPanel
             {
-                Orientation = Orientation.Horizontal
+                Orientation = Orientation.Horizontal,
+                Margin = new Thickness(0, 0, 0, 12)
             };
 
             if (course.Price.HasValue)
@@ -100,7 +101,7 @@ namespace CynologicalCenter.UI.Pages
                 {
                     Background = new SolidColorBrush(
                         Color.FromRgb(209, 250, 229)),
-                    CornerRadius = new CornerRadius(5),
+                    CornerRadius = new CornerRadius(20),
                     Padding = new Thickness(10, 4, 10, 4),
                     Margin = new Thickness(0, 0, 8, 0)
                 };
@@ -110,7 +111,7 @@ namespace CynologicalCenter.UI.Pages
                     FontSize = 11,
                     FontWeight = FontWeights.SemiBold,
                     Foreground = new SolidColorBrush(
-                        Color.FromRgb(16, 185, 129))
+                        Color.FromRgb(63, 125, 106))
                 };
                 detailsPanel.Children.Add(priceBadge);
             }
@@ -121,7 +122,7 @@ namespace CynologicalCenter.UI.Pages
                 {
                     Background = new SolidColorBrush(
                         Color.FromRgb(254, 243, 199)),
-                    CornerRadius = new CornerRadius(5),
+                    CornerRadius = new CornerRadius(10),
                     Padding = new Thickness(10, 4, 10, 4)
                 };
                 ageBadge.Child = new TextBlock
@@ -130,7 +131,7 @@ namespace CynologicalCenter.UI.Pages
                     FontSize = 11,
                     FontWeight = FontWeights.SemiBold,
                     Foreground = new SolidColorBrush(
-                        Color.FromRgb(245, 158, 11))
+                        Color.FromRgb(200, 138, 43))
                 };
                 detailsPanel.Children.Add(ageBadge);
             }
@@ -139,19 +140,74 @@ namespace CynologicalCenter.UI.Pages
             panel.Children.Add(name);
             panel.Children.Add(desc);
             panel.Children.Add(detailsPanel);
-            card.Child = panel;
 
             if (RoleAccess.IsAdmin)
             {
-                card.MouseLeftButtonUp += (s, e) =>
+                var btnPanel = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal
+                };
+
+                var btnEdit = new Button
+                {
+                    Content = "Редагувати",
+                    Height = 32,
+                    Padding = new Thickness(12, 0, 12, 0),
+                    Margin = new Thickness(0, 0, 8, 0),
+                    Background = new SolidColorBrush(
+                        Color.FromRgb(63, 125, 106)),
+                    Foreground = Brushes.White,
+                    BorderThickness = new Thickness(0),
+                    Cursor = Cursors.Hand,
+                    FontSize = 12
+                };
+                btnEdit.Click += (s, e) =>
                 {
                     var dialog = new CynologicalCenter.UI.Dialogs
                         .CourseEditDialog(course.CourseId);
                     if (dialog.ShowDialog() == true)
                         _ = LoadDataAsync();
                 };
+
+                var btnDelete = new Button
+                {
+                    Content = "🗑",
+                    Width = 32,
+                    Height = 32,
+                    Background = new SolidColorBrush(
+                        Color.FromRgb(181, 74, 74)),
+                    Foreground = Brushes.White,
+                    BorderThickness = new Thickness(0),
+                    Cursor = Cursors.Hand,
+                    FontSize = 14
+                };
+                btnDelete.Click += async (s, e) =>
+                {
+                    var result = MessageBox.Show(
+                        $"Видалити курс {course.CourseName}?",
+                        "Підтвердження",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Warning);
+
+                    if (result != MessageBoxResult.Yes) return;
+
+                    try
+                    {
+                        await App.Courses.DeleteAsync(course.CourseId);
+                        await LoadDataAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Помилка: {ex.Message}");
+                    }
+                };
+
+                btnPanel.Children.Add(btnEdit);
+                btnPanel.Children.Add(btnDelete);
+                panel.Children.Add(btnPanel);
             }
 
+            card.Child = panel;
             return card;
         }
 

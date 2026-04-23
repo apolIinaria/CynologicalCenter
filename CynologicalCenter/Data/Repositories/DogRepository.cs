@@ -164,6 +164,16 @@ namespace CynologicalCenter.Data.Repositories
             return list;
         }
 
+        public async Task DeleteAsync(int dogId)
+        {
+            using var conn = _factory.CreateConnection();
+            await conn.OpenAsync();
+            using var cmd = new MySqlCommand(
+                "DELETE FROM dogs WHERE dog_id = @id", conn);
+            cmd.Parameters.AddWithValue("@id", dogId);
+            await cmd.ExecuteNonQueryAsync();
+        }
+
         private DogProfileViewModel MapProfile(MySqlDataReader r) => new DogProfileViewModel
         {
             DogId = r.GetInt32("dog_id"),

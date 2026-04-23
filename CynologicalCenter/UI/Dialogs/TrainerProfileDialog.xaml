@@ -67,6 +67,27 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
+                    <Button x:Name="BtnDeleteTrainer"
+                            Content="🗑"
+                            Width="36" Height="36"
+                            Background="#B54A4A"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Margin="0,0,8,0"
+                            ToolTip="Видалити тренера"
+                            Visibility="Collapsed"
+                            Click="BtnDeleteTrainer_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                        CornerRadius="18">
+                                    <ContentPresenter
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
                     <Button x:Name="BtnEdit"
                             Content="Редагувати"
                             Height="36" Padding="14,0"

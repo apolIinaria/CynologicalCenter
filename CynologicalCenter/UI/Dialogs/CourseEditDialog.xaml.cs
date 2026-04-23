@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CynologicalCenter.Helpers;
+using CynologicalCenter.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using CynologicalCenter.Models;
 
 namespace CynologicalCenter.UI.Dialogs
 {
@@ -32,6 +33,9 @@ namespace CynologicalCenter.UI.Dialogs
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            BtnDelete.Visibility = (_courseId.HasValue && RoleAccess.IsAdmin)
+                ? Visibility.Visible : Visibility.Collapsed;
+
             if (_courseId.HasValue)
             {
                 TxtTitle.Text = "Редагувати курс";
@@ -79,6 +83,32 @@ namespace CynologicalCenter.UI.Dialogs
             catch (System.Exception ex)
             {
                 TxtError.Text = $"Помилка: {ex.Message}";
+            }
+        }
+
+        private async void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_courseId.HasValue) return;
+
+            var result = MessageBox.Show(
+                $"Видалити курс {TxtName.Text}?\n\nЦе також видалить всі пов'язані записи.",
+                "Підтвердження видалення",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes) return;
+
+            try
+            {
+                await App.Courses.DeleteAsync(_courseId.Value);
+                MessageBox.Show("Курс видалено", "Успішно",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                DialogResult = true;
+                Close();
+            }
+            catch (System.Exception ex)
+            {
+                ShowError($"Помилка: {ex.Message}");
             }
         }
 

@@ -23,11 +23,47 @@ namespace CynologicalCenter.UI.Dialogs
             DpDate.SelectedDate = DateTime.Today;
             CmbDog.ItemsSource = await App.Dogs.GetAllAsync();
             CmbTrainer.ItemsSource = await App.TrainerService.GetAllAsync();
-            CmbCourse.ItemsSource = await App.Courses.GetAllAsync();
+        }
+
+        private async void CmbTrainer_SelectionChanged(object sender,
+            System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (CmbTrainer.SelectedValue == null)
+            {
+                CmbCourse.ItemsSource = null;
+                CmbCourse.IsEnabled = false;
+                return;
+            }
+
+            int trainerId = (int)CmbTrainer.SelectedValue;
+
+            try
+            {
+                var courseIds = await App.TrainerService
+                    .GetCourseIdsAsync(trainerId);
+                var allCourses = await App.Courses.GetAllAsync();
+                var trainerCourses = allCourses
+                    .Where(c => courseIds.Contains(c.CourseId))
+                    .ToList();
+
+                CmbCourse.ItemsSource = trainerCourses;
+                CmbCourse.IsEnabled = trainerCourses.Count > 0;
+                CmbCourse.SelectedIndex = -1;
+
+                if (trainerCourses.Count == 0)
+                    TxtError.Text = "Цей тренер не має допущених курсів";
+                else
+                    TxtError.Text = "";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка: {ex.Message}");
+            }
         }
 
         private async void BtnEnroll_Click(object sender, RoutedEventArgs e)
         {
+            ErrorBorder.Visibility = Visibility.Collapsed;
             TxtError.Text = "";
 
             if (CmbDog.SelectedValue == null ||
@@ -35,13 +71,13 @@ namespace CynologicalCenter.UI.Dialogs
                 CmbCourse.SelectedValue == null ||
                 DpDate.SelectedDate == null)
             {
-                TxtError.Text = "Заповніть всі поля";
+                ShowError("Заповніть всі поля");
                 return;
             }
 
             if (!TimeSpan.TryParse(TxtTime.Text, out TimeSpan time))
             {
-                TxtError.Text = "Невірний формат часу (HH:mm)";
+                ShowError("Невірний формат часу (HH:mm)");
                 return;
             }
 
@@ -62,8 +98,14 @@ namespace CynologicalCenter.UI.Dialogs
             }
             else
             {
-                TxtError.Text = msg;
+                ShowError(msg);
             }
+        }
+
+        private void ShowError(string msg)
+        {
+            TxtError.Text = msg;
+            ErrorBorder.Visibility = Visibility.Visible;
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)

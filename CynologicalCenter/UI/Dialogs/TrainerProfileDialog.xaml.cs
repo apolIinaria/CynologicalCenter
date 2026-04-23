@@ -30,6 +30,8 @@ namespace CynologicalCenter.UI.Dialogs
         {
             BtnUploadPhoto.Visibility = RoleAccess.CanManageTrainers
                 ? Visibility.Visible : Visibility.Collapsed;
+            BtnDeleteTrainer.Visibility = RoleAccess.IsAdmin
+                ? Visibility.Visible : Visibility.Collapsed;
             BtnEdit.Visibility = RoleAccess.CanManageTrainers
                 ? Visibility.Visible : Visibility.Collapsed;
 
@@ -132,6 +134,32 @@ namespace CynologicalCenter.UI.Dialogs
                 MessageBox.Show($"Помилка: {ex.Message}",
                     "Помилка", MessageBoxButton.OK,
                     MessageBoxImage.Error);
+            }
+        }
+        private async void BtnDeleteTrainer_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show(
+                $"Видалити тренера {TxtName.Text}?",
+                "Підтвердження",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes) return;
+
+            try
+            {
+                var (success, msg) = await App.TrainerService
+                    .DeleteAsync(_trainerId);
+                MessageBox.Show(msg,
+                    success ? "Успішно" : "Помилка",
+                    MessageBoxButton.OK,
+                    success ? MessageBoxImage.Information
+                            : MessageBoxImage.Error);
+                if (success) { DialogResult = true; Close(); }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка: {ex.Message}");
             }
         }
 

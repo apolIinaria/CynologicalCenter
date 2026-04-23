@@ -55,10 +55,13 @@
                             <ColumnDefinition Width="8"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <ComboBox x:Name="CmbBreed"
-                                  Grid.Column="0"
-                                  DisplayMemberPath="BreedName"
-                                  SelectedValuePath="BreedId"/>
+                        <ComboBox x:Name="CmbBreed" SelectedValuePath="BreedId">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding BreedName}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                         <Button Grid.Column="2"
                                 Content="+"
                                 Width="38" Height="38"
@@ -71,9 +74,13 @@
                 <StackPanel Grid.Column="2">
                     <TextBlock Text="Власник"
                                Style="{StaticResource LabelText}"/>
-                    <ComboBox x:Name="CmbOwner"
-                              DisplayMemberPath="FullName"
-                              SelectedValuePath="OwnerId"/>
+                    <ComboBox x:Name="CmbOwner" SelectedValuePath="OwnerId">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding FullName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </StackPanel>
             </Grid>
 

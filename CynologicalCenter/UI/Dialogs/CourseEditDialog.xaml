@@ -15,17 +15,41 @@
         </Grid.RowDefinitions>
 
         <Border Background="{StaticResource PrimaryBrush}"
-                Height="64" Padding="20,0">
-            <StackPanel VerticalAlignment="Center">
-                <TextBlock x:Name="TxtTitle"
-                           Text="Новий курс"
-                           Foreground="White"
-                           FontSize="17"
-                           FontWeight="Bold"/>
-                <TextBlock Text="Заповніть дані курсу"
-                           Foreground="#A8C5BC"
-                           FontSize="11"/>
-            </StackPanel>
+        Height="70" Padding="24,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock x:Name="TxtTitle" Text="Новий курс"
+                               Foreground="White" FontSize="18"
+                               FontWeight="Bold"/>
+                    <TextBlock Text="Заповніть дані курсу"
+                               Foreground="#A8C5BC" FontSize="12"/>
+                </StackPanel>
+                <Button x:Name="BtnDelete"
+                        Grid.Column="1"
+                        Content="Видалити"
+                        Height="34" Padding="14,0"
+                        Background="#B54A4A"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Visibility="Collapsed"
+                        Click="BtnDelete_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                                    CornerRadius="8"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
         </Border>
 
         <Grid Grid.Row="1" Margin="20">

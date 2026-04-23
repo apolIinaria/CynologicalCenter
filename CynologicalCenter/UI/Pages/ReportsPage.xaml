@@ -142,10 +142,13 @@
                                 </StackPanel>
 
                                 <TextBlock Text="Тренер" Style="{StaticResource LabelText}"/>
-                                <ComboBox x:Name="CmbTrainer"
-                                          DisplayMemberPath="FullName"
-                                          SelectedValuePath="TrainerId"
-                                          Margin="0,0,0,8"/>
+                                <ComboBox x:Name="CmbTrainer" SelectedValuePath="TrainerId">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding FullName}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
 
                                 <TextBlock Text="Дата" Style="{StaticResource LabelText}"/>
                                 <DatePicker x:Name="DpSchedule"/>
@@ -185,9 +188,13 @@
                                 </StackPanel>
 
                                 <TextBlock Text="Собака" Style="{StaticResource LabelText}"/>
-                                <ComboBox x:Name="CmbDog"
-                                          DisplayMemberPath="Nickname"
-                                          SelectedValuePath="DogId"/>
+                                <ComboBox x:Name="CmbDog" SelectedValuePath="DogId">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Nickname}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
 
                             </StackPanel>
 
