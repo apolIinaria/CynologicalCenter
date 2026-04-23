@@ -1,0 +1,90 @@
+﻿<Window x:Class="CynologicalCenter.UI.Dialogs.OwnerProfileDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Профіль клієнта" Height="620" Width="700"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BackgroundBrush}"
+        Loaded="Window_Loaded">
+
+    <Grid>
+        <Border Background="{StaticResource PrimaryBrush}"
+                VerticalAlignment="Top" Height="100" Padding="24,0">
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center">
+                <Border Width="60" Height="60"
+                        CornerRadius="30"
+                        Background="#2F5E50"
+                        Margin="0,0,16,0">
+                    <TextBlock x:Name="TxtInitials"
+                               Foreground="White" FontSize="22"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+                </Border>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock x:Name="TxtName"
+                               Foreground="White" FontSize="22"
+                               FontWeight="Bold"/>
+                    <TextBlock x:Name="TxtStatus"
+                               Foreground="#A8C5BC" FontSize="13"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <ScrollViewer Margin="0,100,0,0" Padding="24">
+            <StackPanel>
+
+                <Border Style="{StaticResource Card}"
+                        Margin="0,0,0,16">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Телефон"
+                                       Style="{StaticResource LabelText}"/>
+                            <TextBlock x:Name="TxtPhone"
+                                       FontSize="14" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Email"
+                                       Style="{StaticResource LabelText}"/>
+                            <TextBlock x:Name="TxtEmail"
+                                       FontSize="14" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <StackPanel x:Name="ActionButtons"
+                            Orientation="Horizontal"
+                            Margin="0,0,0,16">
+                    <Button x:Name="BtnEdit"
+                            Content="Редагувати"
+                            Style="{StaticResource SecondaryButton}"
+                            Margin="0,0,8,0"
+                            Click="BtnEdit_Click"/>
+                    <Button x:Name="BtnDeactivate"
+                            Content="Деактивувати"
+                            Style="{StaticResource DangerButton}"
+                            Click="BtnDeactivate_Click"/>
+                </StackPanel>
+
+                <TextBlock Text="Собаки"
+                           Style="{StaticResource SectionTitle}"/>
+                <WrapPanel x:Name="WrapDogs"
+                           Margin="0,0,0,16"/>
+                <StackPanel x:Name="AddDogPanel"
+                            Orientation="Horizontal"
+                            Margin="0,8,0,0"
+                            Visibility="Collapsed">
+                    <Button Content="Додати собаку"
+                            Style="{StaticResource PrimaryButton}"
+                            Click="BtnAddDog_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

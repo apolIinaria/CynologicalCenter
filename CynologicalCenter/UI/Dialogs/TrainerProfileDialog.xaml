@@ -1,0 +1,187 @@
+﻿<Window x:Class="CynologicalCenter.UI.Dialogs.TrainerProfileDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Профіль тренера" Height="500" Width="600"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BackgroundBrush}"
+        Loaded="Window_Loaded">
+
+    <Grid>
+        <Border Background="{StaticResource PrimaryBrush}"
+                VerticalAlignment="Top" Height="100" Padding="24,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0"
+                        Width="64" Height="64"
+                        CornerRadius="32"
+                        Background="#059669"
+                        Margin="0,0,16,0"
+                        VerticalAlignment="Center">
+                    <Grid>
+                        <TextBlock x:Name="TxtInitialsAvatar"
+                                   Foreground="White" FontSize="22"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                        <Ellipse x:Name="TrainerPhotoEllipse"
+                                 Width="64" Height="64"
+                                 Visibility="Collapsed">
+                            <Ellipse.Fill>
+                                <ImageBrush x:Name="TrainerPhotoBrush"
+                                            Stretch="UniformToFill"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                    </Grid>
+                </Border>
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock x:Name="TxtName"
+                               Foreground="White" FontSize="22"
+                               FontWeight="Bold"/>
+                    <TextBlock x:Name="TxtExperience"
+                               Foreground="#A7F3D0" FontSize="13"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <Button x:Name="BtnUploadPhoto"
+                            Content="🤳" Width="36" Height="36"
+                            Background="#047857" BorderThickness="0"
+                            Foreground="White" Margin="0,0,8,0"
+                            ToolTip="Завантажити фото"
+                            Visibility="Collapsed"
+                            Click="BtnUploadPhoto_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                        CornerRadius="18">
+                                    <ContentPresenter
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button x:Name="BtnEdit"
+                            Content="Редагувати"
+                            Height="36" Padding="14,0"
+                            Background="#3A2F2A" Foreground="White"
+                            BorderThickness="0"
+                            Visibility="Collapsed"
+                            Click="BtnEdit_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                        CornerRadius="8"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <ScrollViewer Margin="0,80,0,0" Padding="24">
+            <StackPanel>
+
+                <Border Style="{StaticResource Card}"
+                        Margin="0,0,0,16">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Телефон"
+                                       Style="{StaticResource LabelText}"/>
+                            <TextBlock x:Name="TxtPhone"
+                                       FontSize="14" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Email"
+                                       Style="{StaticResource LabelText}"/>
+                            <TextBlock x:Name="TxtEmail"
+                                       FontSize="14" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Дата найму"
+                                       Style="{StaticResource LabelText}"/>
+                            <TextBlock x:Name="TxtHireDate"
+                                       FontSize="14" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource Card}"
+                        Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock Text="Показники KPI"
+                                   Style="{StaticResource SectionTitle}"/>
+                        <UniformGrid Columns="3">
+                            <StackPanel Margin="0,0,16,0">
+                                <TextBlock Text="Занять виконано"
+                                           Style="{StaticResource LabelText}"/>
+                                <TextBlock x:Name="TxtTotalSessions"
+                                           FontSize="26" FontWeight="Bold"
+                                           Foreground="{StaticResource PrimaryBrush}"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,0,16,0">
+                                <TextBlock Text="Середня оцінка"
+                                           Style="{StaticResource LabelText}"/>
+                                <TextBlock x:Name="TxtAvgGrade"
+                                           FontSize="26" FontWeight="Bold"
+                                           Foreground="{StaticResource WarningBrush}"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Рейтинг"
+                                           Style="{StaticResource LabelText}"/>
+                                <TextBlock x:Name="TxtRating"
+                                           FontSize="26" FontWeight="Bold"
+                                           Foreground="{StaticResource SuccessBrush}"/>
+                            </StackPanel>
+                        </UniformGrid>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Text="Допущені курси"
+                                   Style="{StaticResource SectionTitle}"/>
+                        <ItemsControl x:Name="CoursesList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#E8F0EE"
+                                            CornerRadius="20"
+                                            Padding="12,6"
+                                            Margin="0,0,8,8">
+                                        <TextBlock
+                                            Text="{Binding CourseName}"
+                                            FontSize="13"
+                                            Foreground="{StaticResource PrimaryBrush}"
+                                            FontWeight="SemiBold"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

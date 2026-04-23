@@ -1,64 +1,135 @@
 ﻿<Window x:Class="CynologicalCenter.UI.Dialogs.TrainerEditDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Тренер" Height="460" Width="450"
+        Title="Тренер" Height="620" Width="480"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
+        Background="White"
         Loaded="Window_Loaded">
 
-    <Grid Margin="24">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" x:Name="TxtTitle"
-                   Text="Новий тренер"
-                   FontSize="16" FontWeight="Bold"
-                   Margin="0,0,0,16"/>
-
-        <TextBlock Grid.Row="1" Text="ПІБ *" Margin="0,0,0,4"/>
-        <TextBox Grid.Row="2" x:Name="TxtFullName"
-                 Height="32" Padding="8,4" Margin="0,0,0,10"/>
-
-        <TextBlock Grid.Row="3" Text="Телефон" Margin="0,0,0,4"/>
-        <TextBox Grid.Row="4" x:Name="TxtPhone"
-                 Height="32" Padding="8,4" Margin="0,0,0,10"/>
-
-        <TextBlock Grid.Row="5" Text="Email" Margin="0,0,0,4"/>
-        <TextBox Grid.Row="6" x:Name="TxtEmail"
-                 Height="32" Padding="8,4" Margin="0,0,0,10"/>
-
-        <Grid Grid.Row="7" Margin="0,0,0,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="16"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0">
-                <TextBlock Text="Досвід (років)" Margin="0,0,0,4"/>
-                <TextBox x:Name="TxtExperience"
-                         Height="32" Padding="8,4"/>
+        <Border Background="{StaticResource PrimaryBrush}"
+                Height="70" Padding="24,0">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock x:Name="TxtTitle" Text="Новий тренер"
+                           Foreground="White" FontSize="18"
+                           FontWeight="Bold"/>
+                <TextBlock Text="Заповніть дані тренера"
+                           Foreground="#A8C5BC" FontSize="12"/>
             </StackPanel>
-            <StackPanel Grid.Column="2">
-                <TextBlock Text="Дата найму" Margin="0,0,0,4"/>
-                <DatePicker x:Name="DpHireDate" Height="32"/>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Margin="0,0,0,12">
+                <TextBlock Text="ПІБ *"
+                           Style="{StaticResource LabelText}"/>
+                <TextBox x:Name="TxtFullName"
+                         Style="{StaticResource ModernTextBox}"/>
             </StackPanel>
+
+            <Grid Grid.Row="1" Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Телефон"
+                               Style="{StaticResource LabelText}"/>
+                    <TextBox x:Name="TxtPhone"
+                             Style="{StaticResource ModernTextBox}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Email"
+                               Style="{StaticResource LabelText}"/>
+                    <TextBox x:Name="TxtEmail"
+                             Style="{StaticResource ModernTextBox}"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="2" Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Досвід (років)"
+                               Style="{StaticResource LabelText}"/>
+                    <TextBox x:Name="TxtExperience"
+                             Style="{StaticResource ModernTextBox}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Дата найму"
+                               Style="{StaticResource LabelText}"/>
+                    <DatePicker x:Name="DpHireDate"/>
+                </StackPanel>
+            </Grid>
+
+            <Border Height="1"
+                    Grid.Row="3"
+                    Background="{StaticResource BorderBrush}"
+                    Margin="0,0,0,12"/>
+
+            <StackPanel Grid.Row="4" Margin="0,0,0,12">
+                <TextBlock Text="ДОПУСКИ ДО КУРСІВ"
+                           FontSize="11" FontWeight="Bold"
+                           Foreground="{StaticResource TextLightBrush}"
+                           Margin="0,0,0,8"/>
+                <Border BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="1.5" CornerRadius="8"
+                        Padding="12" MaxHeight="140">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl x:Name="CoursesItemsControl">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding CourseName}"
+                                              Margin="0,4"
+                                              FontSize="13"
+                                              Tag="{Binding CourseId}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+            </StackPanel>
+
+            <Border x:Name="ErrorBorder"
+                    Grid.Row="5"
+                    Background="#FEE2E2" CornerRadius="8"
+                    Padding="12,8" Visibility="Collapsed">
+                <TextBlock x:Name="TxtError"
+                           Foreground="#DC2626" FontSize="13"
+                           TextWrapping="Wrap"/>
+            </Border>
         </Grid>
 
-        <TextBlock Grid.Row="8" Text="Курси (допуски)"
-                   Margin="0,0,0,4"/>
-        <ListBox Grid.Row="9" x:Name="LstCourses"
-                 Height="100" Margin="0,0,0,10"
-                 SelectionMode="Multiple"
-                 DisplayMemberPath="CourseName"/>
+        <Border Grid.Row="2" Padding="24,16">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button Content="Скасувати"
+                        Style="{StaticResource SecondaryButton}"
+                        Margin="0,0,8,0"
+                        Click="BtnCancel_Click"/>
+                <Button Content="Зберегти"
+                        Style="{StaticResource PrimaryButton}"
+                        Click="BtnSave_Click"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

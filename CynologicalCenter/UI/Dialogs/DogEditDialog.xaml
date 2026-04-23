@@ -1,70 +1,121 @@
 ﻿<Window x:Class="CynologicalCenter.UI.Dialogs.DogEditDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Собака" Height="420" Width="450"
+        Title="Собака" Height="480" Width="460"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
+        Background="White"
         Loaded="Window_Loaded">
 
-    <Grid Margin="24">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" x:Name="TxtTitle"
-                   Text="Нова собака"
-                   FontSize="16" FontWeight="Bold"
-                   Margin="0,0,0,16"/>
-
-        <TextBlock Grid.Row="1" Text="Кличка *" Margin="0,0,0,4"/>
-        <TextBox Grid.Row="2" x:Name="TxtNickname"
-                 Height="32" Padding="8,4" Margin="0,0,0,10"/>
-
-        <TextBlock Grid.Row="3" Text="Порода" Margin="0,0,0,4"/>
-        <ComboBox Grid.Row="4" x:Name="CmbBreed"
-                  Height="32" Margin="0,0,0,10"
-                  DisplayMemberPath="BreedName"
-                  SelectedValuePath="BreedId"/>
-
-        <TextBlock Grid.Row="5" Text="Власник" Margin="0,0,0,4"/>
-        <ComboBox Grid.Row="6" x:Name="CmbOwner"
-                  Height="32" Margin="0,0,0,10"
-                  DisplayMemberPath="FullName"
-                  SelectedValuePath="OwnerId"/>
-
-        <Grid Grid.Row="7" Margin="0,0,0,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="16"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0">
-                <TextBlock Text="Дата народження" Margin="0,0,0,4"/>
-                <DatePicker x:Name="DpBirthDate" Height="32"/>
+        <Border Background="{StaticResource PrimaryBrush}"
+                Height="70" Padding="24,0">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock x:Name="TxtTitle" Text="Нова собака"
+                           Foreground="White" FontSize="18"
+                           FontWeight="Bold"/>
+                <TextBlock Text="Заповніть дані собаки"
+                           Foreground="#A8C5BC" FontSize="12"/>
             </StackPanel>
-            <StackPanel Grid.Column="2">
-                <TextBlock Text="Остання вакцинація" Margin="0,0,0,4"/>
-                <DatePicker x:Name="DpVaccination" Height="32"/>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Margin="0,0,0,12">
+                <TextBlock Text="Кличка *"
+                           Style="{StaticResource LabelText}"/>
+                <TextBox x:Name="TxtNickname"
+                         Style="{StaticResource ModernTextBox}"/>
             </StackPanel>
+
+            <Grid Grid.Row="1" Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Порода"
+                               Style="{StaticResource LabelText}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox x:Name="CmbBreed"
+                                  Grid.Column="0"
+                                  DisplayMemberPath="BreedName"
+                                  SelectedValuePath="BreedId"/>
+                        <Button Grid.Column="2"
+                                Content="+"
+                                Width="38" Height="38"
+                                Style="{StaticResource PrimaryButton}"
+                                Padding="0"
+                                ToolTip="Додати нову породу"
+                                Click="BtnAddBreed_Click"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Власник"
+                               Style="{StaticResource LabelText}"/>
+                    <ComboBox x:Name="CmbOwner"
+                              DisplayMemberPath="FullName"
+                              SelectedValuePath="OwnerId"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="2" Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Дата народження"
+                               Style="{StaticResource LabelText}"/>
+                    <DatePicker x:Name="DpBirthDate"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Остання вакцинація"
+                               Style="{StaticResource LabelText}"/>
+                    <DatePicker x:Name="DpVaccination"/>
+                </StackPanel>
+            </Grid>
+
+            <Border x:Name="ErrorBorder"
+                    Grid.Row="3"
+                    Background="#FEE2E2" CornerRadius="8"
+                    Padding="12,8" Visibility="Collapsed">
+                <TextBlock x:Name="TxtError"
+                           Foreground="#DC2626" FontSize="13"
+                           TextWrapping="Wrap"/>
+            </Border>
         </Grid>
 
-        <StackPanel Grid.Row="8" Orientation="Horizontal"
-                    HorizontalAlignment="Right" Margin="0,8,0,0">
-            <TextBlock x:Name="TxtError" Foreground="Red"
-                       VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <Button Content="Скасувати" Height="32" Padding="16,0"
-                    Margin="0,0,8,0" Click="BtnCancel_Click"/>
-            <Button Content="Зберегти" Height="32" Padding="16,0"
-                    Background="#2563EB" Foreground="White"
-                    BorderThickness="0" Click="BtnSave_Click"/>
-        </StackPanel>
+        <Border Grid.Row="2" Padding="24,16">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button Content="Скасувати"
+                        Style="{StaticResource SecondaryButton}"
+                        Margin="0,0,8,0"
+                        Click="BtnCancel_Click"/>
+                <Button Content="Зберегти"
+                        Style="{StaticResource PrimaryButton}"
+                        Click="BtnSave_Click"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

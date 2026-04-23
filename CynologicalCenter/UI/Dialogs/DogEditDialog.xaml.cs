@@ -12,29 +12,45 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CynologicalCenter.Models;
+using Microsoft.VisualBasic;
 
 namespace CynologicalCenter.UI.Dialogs
 {
     public partial class DogEditDialog : Window
     {
         private readonly int? _dogId;
-
+        private readonly int? _preselectedOwnerId;
         public DogEditDialog()
         {
             InitializeComponent();
             _dogId = null;
+            _preselectedOwnerId = null;
         }
 
         public DogEditDialog(int dogId)
         {
             InitializeComponent();
             _dogId = dogId;
+            _preselectedOwnerId = null;
+        }
+
+        public DogEditDialog(int? dogId = null, int? ownerId = null)
+        {
+            InitializeComponent();
+            _dogId = dogId;
+            _preselectedOwnerId = ownerId;
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CmbBreed.ItemsSource = await App.Breeds.GetAllAsync();
             CmbOwner.ItemsSource = await App.Owners.GetActiveAsync();
+
+            if (_preselectedOwnerId.HasValue)
+            {
+                CmbOwner.SelectedValue = _preselectedOwnerId.Value;
+                CmbOwner.IsEnabled = false;
+            }
 
             if (_dogId.HasValue)
             {
@@ -51,13 +67,43 @@ namespace CynologicalCenter.UI.Dialogs
             }
         }
 
+        private async void BtnAddBreed_Click(object sender, RoutedEventArgs e)
+        {
+            string input = Interaction.InputBox(
+                "Введіть назву нової породи:",
+                "Нова порода", "");
+
+            if (string.IsNullOrWhiteSpace(input)) return;
+
+            try
+            {
+                await App.Breeds.AddAsync(new Models.Breed
+                {
+                    BreedName = input.Trim()
+                });
+
+                var breeds = await App.Breeds.GetAllAsync();
+                CmbBreed.ItemsSource = breeds;
+
+                var newBreed = breeds
+                    .OrderByDescending(b => b.BreedId)
+                    .FirstOrDefault();
+                if (newBreed != null)
+                    CmbBreed.SelectedValue = newBreed.BreedId;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка: {ex.Message}");
+            }
+        }
+
         private async void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            TxtError.Text = "";
+            ErrorBorder.Visibility = Visibility.Collapsed;
 
             if (string.IsNullOrWhiteSpace(TxtNickname.Text))
             {
-                TxtError.Text = "Кличка є обов'язковою";
+                ShowError("Кличка є обов'язковою");
                 return;
             }
 
@@ -83,7 +129,7 @@ namespace CynologicalCenter.UI.Dialogs
             }
             catch (System.Exception ex)
             {
-                TxtError.Text = $"Помилка: {ex.Message}";
+                ShowError($"Помилка: {ex.Message}");
             }
         }
 
@@ -91,6 +137,12 @@ namespace CynologicalCenter.UI.Dialogs
         {
             DialogResult = false;
             Close();
+        }
+
+        private void ShowError(string msg)
+        {
+            TxtError.Text = msg;
+            ErrorBorder.Visibility = Visibility.Visible;
         }
     }
 }

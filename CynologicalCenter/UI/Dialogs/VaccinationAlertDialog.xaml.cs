@@ -11,24 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Data;
+using CynologicalCenter.Models.ViewModels;
 
 namespace CynologicalCenter.UI.Dialogs
 {
-    public partial class ScheduleReportDialog : Window
+    public partial class VaccinationAlertDialog : Window
     {
-        public ScheduleReportDialog(DataSet ds)
+        public VaccinationAlertDialog(List<ExpiredVaccinationViewModel> dogs)
         {
             InitializeComponent();
-
-            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-            {
-                var row = ds.Tables[0].Rows[0];
-                TxtHeader.Text = $"{row[0]}  •  {row[1]}";
-            }
-
-            if (ds.Tables.Count > 1)
-                GridSchedule.ItemsSource = ds.Tables[1].DefaultView;
+            TxtCount.Text = $"{dogs.Count} собак";
+            GridExpired.ItemsSource = dogs;
         }
     }
 }

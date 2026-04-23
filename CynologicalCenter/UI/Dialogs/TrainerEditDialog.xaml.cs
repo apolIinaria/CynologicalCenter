@@ -19,95 +19,96 @@ namespace CynologicalCenter.UI.Dialogs
     public partial class TrainerEditDialog : Window
     {
         private readonly int? _trainerId;
+        private List<Course> _courses = new();
+
         public TrainerEditDialog()
         {
             InitializeComponent();
             _trainerId = null;
-            AddSaveCancel();
         }
 
         public TrainerEditDialog(int trainerId)
         {
             InitializeComponent();
             _trainerId = trainerId;
-            AddSaveCancel();
-        }
-
-        private void AddSaveCancel()
-        {
-            var panel = new StackPanel
-            {
-                Orientation = Orientation.Horizontal,
-                HorizontalAlignment = HorizontalAlignment.Right,
-                Margin = new Thickness(0, 8, 0, 0)
-            };
-            var txtError = new TextBlock
-            {
-                Name = "TxtError",
-                Foreground = System.Windows.Media.Brushes.Red,
-                VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(0, 0, 12, 0)
-            };
-            var btnCancel = new Button
-            {
-                Content = "Скасувати",
-                Height = 32,
-                Padding = new Thickness(16, 0, 16, 0),
-                Margin = new Thickness(0, 0, 8, 0)
-            };
-            var btnSave = new Button
-            {
-                Content = "Зберегти",
-                Height = 32,
-                Padding = new Thickness(16, 0, 16, 0),
-                Background = System.Windows.Media.Brushes.DodgerBlue,
-                Foreground = System.Windows.Media.Brushes.White,
-                BorderThickness = new Thickness(0)
-            };
-            btnCancel.Click += (s, e) => { DialogResult = false; Close(); };
-            btnSave.Click += BtnSave_Click;
-            panel.Children.Add(txtError);
-            panel.Children.Add(btnCancel);
-            panel.Children.Add(btnSave);
-
-            var grid = Content as Grid;
-            grid?.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            Grid.SetRow(panel, grid!.RowDefinitions.Count - 1);
-            grid.Children.Add(panel);
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var courses = await App.Courses.GetAllAsync();
-            LstCourses.ItemsSource = courses;
+            _courses = await App.Courses.GetAllAsync();
+            CoursesItemsControl.ItemsSource = _courses;
 
             if (_trainerId.HasValue)
             {
                 TxtTitle.Text = "Редагувати тренера";
-                var trainer = await App.TrainerService.GetByIdAsync(_trainerId.Value);
+                var trainer = await App.TrainerService
+                    .GetByIdAsync(_trainerId.Value);
                 if (trainer != null)
                 {
                     TxtFullName.Text = trainer.FullName;
                     TxtPhone.Text = trainer.Phone ?? "";
                     TxtEmail.Text = trainer.Email ?? "";
-                    TxtExperience.Text = trainer.ExperienceYears?.ToString() ?? "";
+                    TxtExperience.Text =
+                        trainer.ExperienceYears?.ToString() ?? "";
                     DpHireDate.SelectedDate = trainer.HireDate;
                 }
 
-                var courseIds = await App.TrainerService.GetCourseIdsAsync(_trainerId.Value);
-                foreach (var item in LstCourses.Items)
-                {
-                    if (item is Course c && courseIds.Contains(c.CourseId))
-                        LstCourses.SelectedItems.Add(item);
-                }
+                var courseIds = await App.TrainerService
+                    .GetCourseIdsAsync(_trainerId.Value);
+
+                Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Loaded,
+                    new System.Action(() =>
+                    {
+                        foreach (var item in GetCheckBoxes())
+                        {
+                            if (item.Tag is int id &&
+                                courseIds.Contains(id))
+                                item.IsChecked = true;
+                        }
+                    }));
             }
+        }
+
+        private List<CheckBox> GetCheckBoxes()
+        {
+            var result = new List<CheckBox>();
+            foreach (var item in CoursesItemsControl.Items)
+            {
+                var container = CoursesItemsControl
+                    .ItemContainerGenerator
+                    .ContainerFromItem(item) as ContentPresenter;
+                if (container == null) continue;
+                var cb = FindVisualChild<CheckBox>(container);
+                if (cb != null) result.Add(cb);
+            }
+            return result;
+        }
+
+        private static T? FindVisualChild<T>(
+            System.Windows.DependencyObject parent)
+            where T : System.Windows.DependencyObject
+        {
+            for (int i = 0;
+                 i < System.Windows.Media.VisualTreeHelper
+                     .GetChildrenCount(parent); i++)
+            {
+                var child = System.Windows.Media.VisualTreeHelper
+                    .GetChild(parent, i);
+                if (child is T t) return t;
+                var found = FindVisualChild<T>(child);
+                if (found != null) return found;
+            }
+            return null;
         }
 
         private async void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            ErrorBorder.Visibility = Visibility.Collapsed;
+
             if (string.IsNullOrWhiteSpace(TxtFullName.Text))
             {
-                MessageBox.Show("ПІБ є обов'язковим");
+                ShowError("ПІБ є обов'язковим полем");
                 return;
             }
 
@@ -115,9 +116,12 @@ namespace CynologicalCenter.UI.Dialogs
             {
                 TrainerId = _trainerId ?? 0,
                 FullName = TxtFullName.Text.Trim(),
-                Phone = string.IsNullOrWhiteSpace(TxtPhone.Text) ? null : TxtPhone.Text.Trim(),
-                Email = string.IsNullOrWhiteSpace(TxtEmail.Text) ? null : TxtEmail.Text.Trim(),
-                ExperienceYears = int.TryParse(TxtExperience.Text, out int exp) ? exp : null,
+                Phone = string.IsNullOrWhiteSpace(TxtPhone.Text)
+                                  ? null : TxtPhone.Text.Trim(),
+                Email = string.IsNullOrWhiteSpace(TxtEmail.Text)
+                                  ? null : TxtEmail.Text.Trim(),
+                ExperienceYears = int.TryParse(TxtExperience.Text,
+                                  out int exp) ? exp : null,
                 HireDate = DpHireDate.SelectedDate
             };
 
@@ -125,20 +129,33 @@ namespace CynologicalCenter.UI.Dialogs
                 ? await App.TrainerService.UpdateAsync(trainer)
                 : await App.TrainerService.AddAsync(trainer);
 
-            if (!success) { MessageBox.Show(msg); return; }
+            if (!success) { ShowError(msg); return; }
 
-            var selectedCourseIds = LstCourses.SelectedItems
-                .Cast<Course>()
-                .Select(c => c.CourseId)
+            var selectedIds = GetCheckBoxes()
+                .Where(cb => cb.IsChecked == true)
+                .Select(cb => (int)cb.Tag)
                 .ToList();
 
             int id = _trainerId ?? (await App.Trainers.GetAllAsync())
-                .OrderByDescending(t => t.TrainerId).First().TrainerId;
+                .OrderByDescending(t => t.TrainerId)
+                .First().TrainerId;
 
-            await App.TrainerService.SetCoursesAsync(id, selectedCourseIds);
+            await App.TrainerService.SetCoursesAsync(id, selectedIds);
 
             DialogResult = true;
             Close();
+        }
+
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+            Close();
+        }
+
+        private void ShowError(string msg)
+        {
+            TxtError.Text = msg;
+            ErrorBorder.Visibility = Visibility.Visible;
         }
     }
 }
