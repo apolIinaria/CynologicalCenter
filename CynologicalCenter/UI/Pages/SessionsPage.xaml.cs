@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CynologicalCenter.Helpers;
+using CynologicalCenter.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +14,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CynologicalCenter.Models;
 
 namespace CynologicalCenter.UI.Pages
 {
@@ -29,6 +30,8 @@ namespace CynologicalCenter.UI.Pages
             CmbStatus.Items.Add("Виконано");
             CmbStatus.Items.Add("Скасовано");
             CmbStatus.SelectedIndex = 0;
+
+            BtnEnroll.IsEnabled = RoleAccess.CanManageSessions;
 
             await LoadDataAsync();
         }
@@ -61,8 +64,8 @@ namespace CynologicalCenter.UI.Pages
         {
             _selected = GridSessions.SelectedItem as Session;
             bool isPlanned = _selected?.Status == "Заплановано";
-            BtnComplete.IsEnabled = isPlanned;
-            BtnCancel.IsEnabled = isPlanned;
+            BtnComplete.IsEnabled = isPlanned && RoleAccess.CanManageSessions;
+            BtnCancel.IsEnabled = isPlanned && RoleAccess.CanManageSessions;
         }
 
         private void BtnEnroll_Click(object sender, RoutedEventArgs e)
