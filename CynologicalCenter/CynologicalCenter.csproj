@@ -89,6 +89,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
+	<Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
@@ -110,6 +111,7 @@
     <Compile Include="Helpers\DbReaderExtensions.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Helpers\PhotoHelper.cs" />
+    <Compile Include="Helpers\RoleAccess.cs" />
     <Compile Include="Services\EnrollmentService.cs" />
     <Compile Include="Services\Interfaces\IEnrollmentService.cs" />
     <Compile Include="Services\Interfaces\IOwnerService.cs" />
@@ -174,6 +176,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Dialogs\OwnerProfileDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Dialogs\ScheduleReportDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -187,6 +193,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Dialogs\TrainerKpiDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\TrainerProfileDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\VaccinationAlertDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,6 +236,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Styles\AppStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -250,6 +268,9 @@
     <Compile Include="UI\Dialogs\OwnerEditDialog.xaml.cs">
       <DependentUpon>OwnerEditDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Dialogs\OwnerProfileDialog.xaml.cs">
+      <DependentUpon>OwnerProfileDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Dialogs\ScheduleReportDialog.xaml.cs">
       <DependentUpon>ScheduleReportDialog.xaml</DependentUpon>
     </Compile>
@@ -261,6 +282,12 @@
     </Compile>
     <Compile Include="UI\Dialogs\TrainerKpiDialog.xaml.cs">
       <DependentUpon>TrainerKpiDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\TrainerProfileDialog.xaml.cs">
+      <DependentUpon>TrainerProfileDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\VaccinationAlertDialog.xaml.cs">
+      <DependentUpon>VaccinationAlertDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Pages\AdminPage.xaml.cs">
       <DependentUpon>AdminPage.xaml</DependentUpon>
@@ -340,7 +367,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\" />
+    <Resource Include="Assets\paw_pattern.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\login_dog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
