@@ -6,37 +6,57 @@ namespace CynologicalCenter.UI.Views
 {
     public partial class LoginWindow : Window
     {
+        private int _attempts = 0;
+        private const int MaxAttempts = 5;
+
         public LoginWindow() => InitializeComponent();
+
         private async void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            TxtError.Visibility = Visibility.Collapsed;
+            ErrorBorder.Visibility = Visibility.Collapsed;
+
             string username = TxtUsername.Text.Trim();
             string password = TxtPassword.Password;
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+
+            if (string.IsNullOrWhiteSpace(username) ||
+                string.IsNullOrWhiteSpace(password))
             {
                 ShowError("Введіть логін та пароль");
                 return;
             }
 
-            var (success, role) = await App.SecurityService.LoginAsync(username, password);
+            var (success, role) = await App.SecurityService
+                .LoginAsync(username, password);
+
             if (!success)
             {
-                ShowError("Невірний логін або пароль");
+                _attempts++;
                 TxtPassword.Clear();
+
+                if (_attempts >= MaxAttempts)
+                {
+                    ShowError($"Забагато спроб. Спробуйте пізніше.");
+                    TxtUsername.IsEnabled = false;
+                    TxtPassword.IsEnabled = false;
+                    return;
+                }
+
+                ShowError(
+                    $"Невірний логін або пароль. " +
+                    $"Спроба {_attempts} з {MaxAttempts}");
+                TxtPassword.Focus();
                 return;
             }
 
             CurrentUser.Login(username, role);
-
-            var main = new MainWindow();
-            main.Show();
+            new MainWindow().Show();
             Close();
         }
 
         private void ShowError(string msg)
         {
             TxtError.Text = msg;
-            TxtError.Visibility = Visibility.Visible;
+            ErrorBorder.Visibility = Visibility.Visible;
         }
     }
 }

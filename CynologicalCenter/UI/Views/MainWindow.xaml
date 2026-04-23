@@ -1,90 +1,124 @@
 ﻿<Window x:Class="CynologicalCenter.UI.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CynologicalCenter"
-        mc:Ignorable="d"
-        Title="Кінологічний центр"
-        Height="700" Width="1100"
+        Title="Кінологічний центр" Height="750" Width="1200"
         WindowStartupLocation="CenterScreen"
-		Loaded="Window_Loaded">
-    <Window.Resources>
-        <Style x:Key="NavButton" TargetType="Button">
-            <Setter Property="Height" Value="44"/>
-            <Setter Property="Margin" Value="0,2"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#E2E8F0"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="Padding" Value="16,0"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#334155"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
+        Background="{StaticResource BackgroundBrush}"
+        Loaded="Window_Loaded">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="220"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <DockPanel Grid.Column="0" Background="#1E293B">
-            <StackPanel DockPanel.Dock="Top" Margin="0,16,0,0">
+        <Border Grid.Column="0"
+                Background="{StaticResource SidebarBrush}">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top">
 
-                <TextBlock Text="КЦ" FontSize="22" FontWeight="Bold"
-                           Foreground="White" Margin="16,0,0,24"/>
+                    <Border Padding="20,24,20,20">
+                        <StackPanel Orientation="Horizontal">
+                            
+                            <StackPanel Margin="0,0,0,0"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="NovoDog School"
+                                           Foreground="White"
+                                           FontWeight="Bold"
+                                           FontSize="16"/>
+                                <TextBlock Text="Система управління"
+                                           Foreground="#C9C1B8"
+                                           FontSize="14"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
 
-                <TextBlock x:Name="TxtUserInfo" Foreground="#94A3B8"
-                           FontSize="12" Margin="16,0,0,16"/>
+                    <Border Margin="12,0,12,16"
+                            Background="#3A2F2A"
+                            CornerRadius="15"
+                            Padding="10">
+                        <StackPanel>
+                            <TextBlock x:Name="TxtUsername"
+                                       Foreground="White"
+                                       FontWeight="SemiBold"
+                                       FontSize="13"/>
+                            <Border x:Name="BadgeRole"
+                                    CornerRadius="5"
+                                    Padding="8,2"
+                                    Margin="0,5,0,0"
+                                    HorizontalAlignment="Left">
+                                <TextBlock x:Name="TxtRole"
+                                           FontSize="11"
+                                           FontWeight="SemiBold"/>
+                            </Border>
+                        </StackPanel>
+                    </Border>
 
-                <Separator Background="#334155" Margin="0,0,0,8"/>
+                    <TextBlock Text="МЕНЮ"
+                               Foreground="#C9C1B8"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Margin="20,0,0,8"/>
 
-                <Button Content="Дашборд"
-                        Style="{StaticResource NavButton}"
-                        Click="NavDashboard_Click"/>
-                <Button Content="Клієнти"
-                        Style="{StaticResource NavButton}"
-                        Click="NavOwners_Click"/>
-                <Button Content="Собаки"
-                        Style="{StaticResource NavButton}"
-                        Click="NavDogs_Click"/>
-                <Button Content="Тренери"
-                        Style="{StaticResource NavButton}"
-                        Click="NavTrainers_Click"/>
-                <Button Content="Курси"
-                        Style="{StaticResource NavButton}"
-                        Click="NavCourses_Click"/>
-                <Button Content="Заняття"
-                        Style="{StaticResource NavButton}"
-                        Click="NavSessions_Click"/>
+                    <Button x:Name="BtnDashboard"
+                            Content="Головна"
+                            Style="{StaticResource NavButton}"
+                            Click="NavDashboard_Click"/>
+                    <Button x:Name="BtnOwners"
+                            Content="Клієнти"
+                            Style="{StaticResource NavButton}"
+                            Click="NavOwners_Click"/>
+                    <Button x:Name="BtnDogs"
+                            Content="Собаки"
+                            Style="{StaticResource NavButton}"
+                            Click="NavDogs_Click"/>
+                    <Button x:Name="BtnTrainers"
+                            Content="Тренери"
+                            Style="{StaticResource NavButton}"
+                            Click="NavTrainers_Click"/>
+                    <Button x:Name="BtnCourses"
+                            Content="Курси"
+                            Style="{StaticResource NavButton}"
+                            Click="NavCourses_Click"/>
+                    <Button x:Name="BtnSessions"
+                            Content="Заняття"
+                            Style="{StaticResource NavButton}"
+                            Click="NavSessions_Click"/>
 
-                <Separator Background="#334155" Margin="0,8"/>
+                    <Border Height="1" Background="#3A2F2A"
+                            Margin="16,12"/>
 
-                <Button Content="Звіти"
-                        Style="{StaticResource NavButton}"
-                        Click="NavReports_Click"/>
+                    <TextBlock Text="ЗВІТНІСТЬ"
+                               Foreground="#C9C1B8"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Margin="20,0,0,8"/>
 
-                <Button x:Name="BtnAdmin"
-                        Content="Адмін"
-                        Style="{StaticResource NavButton}"
-                        Click="NavAdmin_Click"
-                        Visibility="Collapsed"/>
-            </StackPanel>
+                    <Button x:Name="BtnReports"
+                            Content="Звіти"
+                            Style="{StaticResource NavButton}"
+                            Click="NavReports_Click"/>
 
-            <StackPanel DockPanel.Dock="Bottom" Margin="0,0,0,16">
-                <Separator Background="#334155" Margin="0,0,0,8"/>
-                <Button Content="Вийти"
-                        Style="{StaticResource NavButton}"
-                        Click="BtnLogout_Click"/>
-            </StackPanel>
-        </DockPanel>
-        
+                    <Button x:Name="BtnAdmin"
+                            Content="Адмін"
+                            Style="{StaticResource NavButton}"
+                            Click="NavAdmin_Click"
+                            Visibility="Collapsed"/>
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Bottom"
+                            Margin="0,0,0,16">
+                    <Border Height="1" Background="#3A2F2A"
+                            Margin="16,0,16,12"/>
+                    <Button Content="Вийти"
+                            Style="{StaticResource NavButton}"
+                            Click="BtnLogout_Click"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
         <Frame Grid.Column="1" x:Name="MainFrame"
-               NavigationUIVisibility="Hidden"/>
+               NavigationUIVisibility="Hidden"
+               Background="{StaticResource BackgroundBrush}"/>
     </Grid>
 </Window>

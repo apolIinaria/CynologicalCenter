@@ -79,7 +79,7 @@ namespace CynologicalCenter.Data.StoredProcedures
             using var conn = _factory.CreateConnection();
             await conn.OpenAsync();
             using var cmd = new MySqlCommand("sp_get_trainer_schedule", conn)
-            { CommandType = CommandType.StoredProcedure };
+            { CommandType = System.Data.CommandType.StoredProcedure };
 
             cmd.Parameters.AddWithValue("p_trainer_id", trainerId);
             cmd.Parameters.AddWithValue("p_date", date.Date);
