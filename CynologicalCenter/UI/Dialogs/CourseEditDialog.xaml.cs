@@ -117,5 +117,11 @@ namespace CynologicalCenter.UI.Dialogs
             DialogResult = false;
             Close();
         }
+
+        private void ShowError(string msg)
+        {
+            TxtError.Text = msg;
+            ErrorBorder.Visibility = Visibility.Visible;
+        }
     }
 }
